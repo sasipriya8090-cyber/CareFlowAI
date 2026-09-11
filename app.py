@@ -406,3 +406,46 @@ elif user_role == "Receptionist":
 
 elif user_role == "Admin":
     st.write("👨‍💼 Admin can manage the overall healthcare workflow.")
+    # --------------------------------------------------
+# APPROVALS & DEPARTMENT WORKFLOW - PHASE 2
+# --------------------------------------------------
+
+st.sidebar.header("✅ Approvals")
+
+department = st.sidebar.selectbox(
+    "Department",
+    ["Reception", "Nursing", "Doctor", "Laboratory", "Pharmacy"]
+)
+
+approval_item = st.sidebar.text_input("Approval Request")
+
+if st.sidebar.button("✅ Submit for Approval"):
+
+    if approval_item:
+        st.session_state["approval"] = {
+            "Department": department,
+            "Request": approval_item,
+            "Status": "Pending Approval"
+        }
+
+        st.success("✅ Approval request submitted!")
+    else:
+        st.warning("Please enter an approval request.")
+
+
+if "approval" in st.session_state:
+
+    st.header("✅ Department Approval")
+
+    approval = st.session_state["approval"]
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.write("**Department:**", approval["Department"])
+
+    with col2:
+        st.write("**Request:**", approval["Request"])
+
+    with col3:
+        st.write("**Status:**", approval["Status"])
